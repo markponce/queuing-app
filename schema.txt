@@ -20,6 +20,14 @@ counter
 -name
 -department_id
 
+
+user_counter
+-id
+-counter_id
+-user_id
+created_at
+updated_at
+
 queues
 -id
 -name
@@ -28,6 +36,7 @@ queues
 -user_id
 -department_id
 -called
+
 
 
 

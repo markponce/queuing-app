@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  var User = sequelize.define('User', {
+  var Department = sequelize.define('Department', {
   	id: { 
   		type: DataTypes.INTEGER.UNSIGNED,
   		allowNull: false, 
@@ -9,9 +9,9 @@ module.exports = (sequelize, DataTypes) => {
 
   	},
     name: DataTypes.STRING,
-    username: DataTypes.STRING,
-    password : DataTypes.STRING,
-    status : {
+    letter: DataTypes.STRING,
+    start : DataTypes.INTEGER.UNSIGNED,
+        status : {
       type : DataTypes.BOOLEAN(4),
       defaultValue : 1
 
@@ -25,12 +25,15 @@ module.exports = (sequelize, DataTypes) => {
     	defaultValue: DataTypes.NOW 
     }
   }, {
-
-        tableName : 'users'
-
+        tableName : 'departments'
   });
-  User.associate = function(models) {
+  Department.associate = function(models) {
     // associations can be defined here
+    // console.log(models);
+    models.Department.hasMany(models.Counter);
+    models.Department.hasMany(models.Queue);
+
+    // console.log(models )
   };
-  return User;
+  return Department;
 };

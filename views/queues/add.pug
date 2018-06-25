@@ -10,15 +10,15 @@ html(lang="en")
         // Custom styles for this template
         link(href="/stylesheets/queues.css" rel="stylesheet")
     body.text-center
-        form.form-signin
+        form.form-signin(method='post')
             h1.h3.mb-3.font-weight-normal USSC Queuing System
             .form-group
                 label(for='exampleInputEmail1') Trasaction
-                select#exampleInputEmail1.form-control
-                    option Pay bills
-                    option Money Transfer
+                select#exampleInputEmail1.form-control(name='department_id')
+                    each department, index in departments 
+                        option(value=department.id) #{department.name}
             .form-group
                 label(for='exampleInputPassword1') Name
-                input#exampleInputPassword1.form-control(type='text', placeholder='Name')
+                input#exampleInputPassword1.form-control(type='text', placeholder='Name', name='name')
             button.btn.btn-primary(type='submit') Submit
             p.mt-5.mb-3.text-muted © 2018-2019
