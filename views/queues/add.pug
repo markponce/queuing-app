@@ -9,16 +9,58 @@ html(lang="en")
         link(rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous")
         // Custom styles for this template
         link(href="/stylesheets/queues.css" rel="stylesheet")
+        script(src='https://code.jquery.com/jquery-3.3.1.slim.min.js', integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo', crossorigin='anonymous')
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js', integrity='sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49', crossorigin='anonymous')
+        script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js', integrity='sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T', crossorigin='anonymous')
+        script(type='text/javascript').
+            $(function(){
+
+                function hideAlert() {
+                    if($('.alert').length > 0) 
+                    $('.alert').alert('close');
+                }
+
+                setTimeout(function(){
+                    hideAlert();
+                },10000);
+
+                $('form').on('change', function(){
+                    hideAlert();
+                });
+            });
+
+            //- alert(123);
+
     body.text-center
+
         form.form-signin(method='post')
             h1.h3.mb-3.font-weight-normal USSC Queuing System
+            if queue
+                .alert.alert-success.fade.show(role='alert')
+                    button.close(type='button', data-dismiss='alert', aria-label='Close')
+                        span(aria-hidden='true') ×
+                    h4.alert-heading Success!
+                    p Your token is #{queue.token}.
+                    hr
+                    p Please wait for your token to be called.
+            if errors
+                .alert.alert-danger.fade.show(role='alert')
+                    h4.alert-heading Failed!
+                    ul
+                        each error in errors 
+                            li= error.msg
             .form-group
                 label(for='exampleInputEmail1') Trasaction
-                select#exampleInputEmail1.form-control(name='department_id')
-                    each department, index in departments 
-                        option(value=department.id) #{department.name}
+                select#exampleInputEmail1.form-control(name='department_id' )
+                    option(value="") Select Department
+                    if old 
+                        each department, index in departments 
+                            option(selected=old.department_id == department.id ? true : false, value=department.id) #{department.name}
+                    else 
+                        each department, index in departments 
+                            option(value=department.id) #{department.name}
             .form-group
                 label(for='exampleInputPassword1') Name
-                input#exampleInputPassword1.form-control(type='text', placeholder='Name', name='name')
+                input#exampleInputPassword1.form-control(type='text', placeholder='Name', name='name', value = old ? old.name : '')
             button.btn.btn-primary(type='submit') Submit
             p.mt-5.mb-3.text-muted © 2018-2019

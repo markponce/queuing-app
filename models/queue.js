@@ -9,7 +9,8 @@ module.exports = (sequelize, DataTypes) => {
 
   	},
     name: DataTypes.STRING,
-    token: DataTypes.STRING,
+    letter: DataTypes.STRING,
+    number: DataTypes.INTEGER.UNSIGNED,
     status : {
       type : DataTypes.BOOLEAN(4),
       defaultValue : 0
@@ -24,7 +25,12 @@ module.exports = (sequelize, DataTypes) => {
     	defaultValue: DataTypes.NOW 
     }
   }, {
-        tableName : 'queues'
+        tableName : 'queues',
+        getterMethods : {
+          token() {
+            return this.letter + "-" + this.number;
+          }
+        }
   });
   Queue.associate = function(models) {
     // associations can be defined here
